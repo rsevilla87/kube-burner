@@ -29,8 +29,6 @@ archives:
       amd64: x86_64
     files:
       - LICENSE
-snapshot:
-  name_template: "{{ .Tag }}-SNAPSHOT"
 changelog:
   sort: asc
   filters:
