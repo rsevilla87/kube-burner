@@ -39,7 +39,6 @@ type Build struct {
 }
 
 func (ex *Executor) waitForObjects(ns string) {
-	waiting := false
 	waitFor := true
 	var wg sync.WaitGroup
 	for _, obj := range ex.objects {
@@ -53,7 +52,6 @@ func (ex *Executor) waitForObjects(ns string) {
 			}
 		}
 		if waitFor {
-			waiting = true
 			wg.Add(1)
 			switch obj.unstructured.GetKind() {
 			case "Deployment":
@@ -75,10 +73,8 @@ func (ex *Executor) waitForObjects(ns string) {
 			}
 		}
 	}
-	if waiting {
-		log.Infof("Waiting %s for actions in namespace %v to be completed", ex.Config.MaxWaitTimeout, ns)
-		wg.Wait()
-	}
+	wg.Wait()
+	log.Infof("Actions in namespace %v completed", ns)
 }
 
 func waitForDeployments(ns string, maxWaitTimeout time.Duration, wg *sync.WaitGroup) {
@@ -192,7 +188,7 @@ func waitForBuild(ns string, maxWaitTimeout time.Duration, expected int, wg *syn
 			_ = json.Unmarshal(jsonBuild, &build)
 			for _, bs := range buildStatus {
 				if build.Status.Phase == "" || build.Status.Phase == bs {
-					log.Debugf("Waiting for Builds in ns %s to be completed", ns)
+					log.Infof("Waiting for Builds in ns %s to be completed", ns)
 					return false, err
 				}
 			}
