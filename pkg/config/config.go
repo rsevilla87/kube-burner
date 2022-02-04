@@ -82,6 +82,8 @@ func (j *Job) UnmarshalYAML(unmarshal func(interface{}) error) error {
 		JobType:              CreationJob,
 		WaitForDeletion:      true,
 		MaxWaitTimeout:       3 * time.Hour,
+		PrePullImages:        false,
+		PrePullPeriod:        1 * time.Minute,
 	}
 	if err := unmarshal(&raw); err != nil {
 		return err
