@@ -47,7 +47,48 @@ func (ex *JobExecutor) setupPatchJob() {
 	}
 }
 
+<<<<<<< HEAD
 func patchHandler(ctx context.Context, ex *JobExecutor, obj *object, originalItem unstructured.Unstructured, iteration int, objectTimeUTC int64, wg *sync.WaitGroup) {
+=======
+// RunPatchJob executes a patch job
+func (ex *Executor) RunPatchJob() {
+	var itemList *unstructured.UnstructuredList
+	log.Infof("Running patch job %s", ex.Name)
+	var wg sync.WaitGroup
+	for _, obj := range ex.objects {
+
+		labelSelector := labels.Set(obj.labelSelector).String()
+		listOptions := metav1.ListOptions{
+			LabelSelector: labelSelector,
+		}
+
+		// Try to find the list of resources by GroupVersionResource.
+		err := RetryWithExponentialBackOff(func() (done bool, err error) {
+			itemList, err = DynamicClient.Resource(obj.gvr).List(context.TODO(), listOptions)
+			if err != nil {
+				log.Errorf("Error found listing %s labeled with %s: %s", obj.gvr.Resource, labelSelector, err)
+				return false, nil
+			}
+			return true, nil
+		}, 1*time.Second, 3, 0, ex.MaxWaitTimeout)
+		if err != nil {
+			continue
+		}
+		log.Infof("Found %d %s with selector %s; patching them", len(itemList.Items), obj.gvr.Resource, labelSelector)
+		for i := 0; i < ex.JobIterations; i++ {
+			for _, item := range itemList.Items {
+				wg.Add(1)
+				go ex.patchHandler(obj, item, i, &wg)
+			}
+		}
+	}
+	wg.Wait()
+}
+
+func (ex *Executor) patchHandler(obj object, originalItem unstructured.Unstructured,
+	iteration int, wg *sync.WaitGroup) {
+
+>>>>>>> fafd04be (Iterations should start from zero)
 	defer wg.Done()
 	// There are several patch modes. Three of them are client-side, and one
 	// of them is server-side.
