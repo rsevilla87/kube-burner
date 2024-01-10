@@ -9,23 +9,25 @@
       
       
       
+        <link rel="prev" href="..">
       
-        <link rel="next" href="cli/">
+      
+        <link rel="next" href="../reference/configuration/">
       
       
-      <link rel="icon" href="media/logos/kube-burner-logo-mini.png">
+      <link rel="icon" href="../media/logos/kube-burner-logo-mini.png">
       <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
     
     
       
-        <title>Kube-burner</title>
+        <title>Command line - Kube-burner</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.50c56a3b.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.50c56a3b.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -44,9 +46,9 @@
       
     
     
-      <link rel="stylesheet" href="css/extra.css">
+      <link rel="stylesheet" href="../css/extra.css">
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -72,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#what-is-kube-burner" class="md-skip">
+        <a href="#cli" class="md-skip">
           Skip to content
         </a>
       
@@ -92,9 +94,9 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="Kube-burner" class="md-header__button md-logo" aria-label="Kube-burner" data-md-component="logo">
+    <a href=".." title="Kube-burner" class="md-header__button md-logo" aria-label="Kube-burner" data-md-component="logo">
       
-  <img src="media/logos/kube-burner-logo-mini.png" alt="logo">
+  <img src="../media/logos/kube-burner-logo-mini.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -111,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              Command line
             
           </span>
         </div>
@@ -233,9 +235,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="Kube-burner" class="md-nav__button md-logo" aria-label="Kube-burner" data-md-component="logo">
+    <a href=".." title="Kube-burner" class="md-nav__button md-logo" aria-label="Kube-burner" data-md-component="logo">
       
-  <img src="media/logos/kube-burner-logo-mini.png" alt="logo">
+  <img src="../media/logos/kube-burner-logo-mini.png" alt="logo">
 
     </a>
     Kube-burner
@@ -259,6 +261,26 @@
       
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
     
   
   
@@ -271,28 +293,18 @@
         
       
       
-      <a href="." class="md-nav__link md-nav__link--active">
-        
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
   
   <span class="md-ellipsis">
-    Home
+    Command line
   </span>
   
 
-      </a>
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="cli/" class="md-nav__link">
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -301,6 +313,80 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#init" class="md-nav__link">
+    <span class="md-ellipsis">
+      Init
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#index" class="md-nav__link">
+    <span class="md-ellipsis">
+      Index
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#measure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Measure
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-alerts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Check alerts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#destroy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Destroy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#completion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Completion
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -312,7 +398,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/configuration/" class="md-nav__link">
+      <a href="../reference/configuration/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -332,7 +418,7 @@
   
   
     <li class="md-nav__item">
-      <a href="measurements/" class="md-nav__link">
+      <a href="../measurements/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -382,7 +468,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="observability/" class="md-nav__link ">
+            <a href="../observability/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -415,7 +501,7 @@
   
   
     <li class="md-nav__item">
-      <a href="observability/" class="md-nav__link">
+      <a href="../observability/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -436,7 +522,7 @@
   
   
     <li class="md-nav__item">
-      <a href="observability/metrics/" class="md-nav__link">
+      <a href="../observability/metrics/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -457,7 +543,7 @@
   
   
     <li class="md-nav__item">
-      <a href="observability/indexing/" class="md-nav__link">
+      <a href="../observability/indexing/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -478,7 +564,7 @@
   
   
     <li class="md-nav__item">
-      <a href="observability/alerting/" class="md-nav__link">
+      <a href="../observability/alerting/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -506,7 +592,7 @@
   
   
     <li class="md-nav__item">
-      <a href="ocp/" class="md-nav__link">
+      <a href="../ocp/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -550,7 +636,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="contributing/" class="md-nav__link ">
+            <a href="../contributing/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -626,7 +712,7 @@
   
   
     <li class="md-nav__item">
-      <a href="contributing/pullrequest/" class="md-nav__link">
+      <a href="../contributing/pullrequest/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -647,7 +733,7 @@
   
   
     <li class="md-nav__item">
-      <a href="contributing/release/" class="md-nav__link">
+      <a href="../contributing/release/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -676,7 +762,7 @@
   
   
     <li class="md-nav__item">
-      <a href="contributing/tests/" class="md-nav__link">
+      <a href="../contributing/tests/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -715,25 +801,109 @@
   
 
 
-<p><a href="https://goreportcard.com/report/github.com/kube-burner/kube-burner"><img alt="Go Report Card" src="https://goreportcard.com/badge/github.com/kube-burner/kube-burner" /></a>
-<a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" /></a></p>
-<h1 id="what-is-kube-burner">What is Kube-burner<a class="headerlink" href="#what-is-kube-burner" title="Permanent link">&para;</a></h1>
-<p>Kube-burner is a Kubernetes performance and scale test orchestration toolset. It provides multi-faceted functionality, the most important of which are summarized below.</p>
+<h1 id="cli">CLI<a class="headerlink" href="#cli" title="Permanent link">&para;</a></h1>
+<p>kube-burner is a tool written in Golang that can be used to stress Kubernetes clusters by creating, deleting, and patching resources at a
+given rate. The actions taken by this tool are highly customizable and their available subcommands are detailed below:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>kube-burner<span class="w"> </span><span class="nb">help</span>
+<span class="go">Kube-burner 🔥</span>
+
+<span class="go">Tool aimed at stressing a kubernetes cluster by creating or deleting lots of objects.</span>
+
+<span class="go">Usage:</span>
+<span class="go">  kube-burner [command]</span>
+
+<span class="go">Available Commands:</span>
+<span class="go">  check-alerts Evaluate alerts for the given time range</span>
+<span class="go">  completion   Generates completion scripts for bash shell</span>
+<span class="go">  destroy      Destroy old namespaces labeled with the given UUID.</span>
+<span class="go">  help         Help about any command</span>
+<span class="go">  import       Import metrics tarball</span>
+<span class="go">  index        Index kube-burner metrics</span>
+<span class="go">  init         Launch benchmark</span>
+<span class="go">  measure      Take measurements for a given set of resources without running workload</span>
+<span class="go">  ocp          OpenShift wrapper</span>
+<span class="go">  version      Print the version number of kube-burner</span>
+
+<span class="go">Flags:</span>
+<span class="go">  -h, --help               help for kube-burner</span>
+<span class="go">      --log-level string   Allowed values: debug, info, warn, error, fatal (default &quot;info&quot;)</span>
+
+<span class="go">Use &quot;kube-burner [command] --help&quot; for more information about a command.</span>
+</code></pre></div>
+<h2 id="init">Init<a class="headerlink" href="#init" title="Permanent link">&para;</a></h2>
+<p>This is the main subcommand; it triggers a new kube-burner benchmark and it supports the these flags:</p>
 <ul>
-<li>Create, delete, and patch Kubernetes resources at scale.</li>
-<li>Prometheus metric collection and indexing.</li>
-<li>Measurements.</li>
-<li>Alerting.</li>
+<li><code>uuid</code>: Benchmark ID. This is essentially an arbitrary string that is used for different purposes along the benchmark. For example, label the objects created by kube-burner as mentioned in the <a href="/kube-burner/configuration/#default-labels">reference chapter</a>. By default, it is auto-generated.</li>
+<li><code>config</code>: Path or URL to a valid configuration file. See details about the configuration schema in the <a href="/kube-burner/configuration/">reference chapter</a>.</li>
+<li><code>configmap</code>: In case of not providing the <code>--config</code> flag, kube-burner is able to fetch its configuration from a given <code>configMap</code>. This variable configures its name. kube-burner expects the configMap to hold all the required configuration: config.yml, metrics.yml, and alerts.yml. Where metrics.yml and alerts.yml are optional.</li>
+<li><code>namespace</code>: Name of the namespace where the configmap is.</li>
+<li><code>log-level</code>: Logging level, one of: <code>debug</code>, <code>error</code>, <code>info</code> or <code>fatal</code>. Default <code>info</code>.</li>
+<li><code>prometheus-url</code>: Prometheus endpoint, required for metrics collection. For example: <code>https://prometheus-k8s-openshift-monitoring.apps.rsevilla.stress.mycluster.example.com</code></li>
+<li><code>metrics-profile</code>: Path to a valid metrics profile file. The default is <code>metrics.yml</code>.</li>
+<li><code>metrics-endpoint</code>: Path to a valid metrics endpoint file.</li>
+<li><code>token</code>: Prometheus Bearer token.</li>
+<li><code>username</code>: Prometheus username for basic authentication.</li>
+<li><code>password</code>: Prometheus password for basic authentication.</li>
+<li><code>skip-tls-verify</code>: Skip TLS verification for Prometheus. The default is <code>true</code>.</li>
+<li><code>step</code>: Prometheus step size. The default is <code>30s</code>.</li>
+<li><code>timeout</code>: Kube-burner benchmark global timeout. When timing out, return code is 2. The default is <code>4h</code>.</li>
+<li><code>user-metadata</code>: YAML file path containing custom user-metadata to be indexed.</li>
 </ul>
-<p>Kube-burner is a binary application written in Golang that makes extensive usage of the official k8s client library, <a href="https://github.com/kubernetes/client-go">client-go</a>.</p>
-<p><img alt="Demo" src="media/demo.gif" /></p>
-<h1 id="quick-starting-with-kube-burner">Quick starting with kube-burner<a class="headerlink" href="#quick-starting-with-kube-burner" title="Permanent link">&para;</a></h1>
-<p>To start tinkering with kube-burner now:</p>
+<div class="admonition note">
+<p class="admonition-title">Prometheus authentication</p>
+<p>Both basic and token authentication methods need permissions able to query the given Prometheus endpoint.</p>
+</div>
+<p>With the above, running a kube-burner benchmark would be as simple as:</p>
+<div class="highlight"><pre><span></span><code><span class="go">kube-burner init -c cfg.yml -u https://prometheus-k8s-openshift-monitoring.apps.rsevilla.stress.mycluster.example.com -t ${token} --uuid 67f9ec6d-6a9e-46b6-a3bb-065cde988790`</span>
+</code></pre></div>
+<p>Kube-burner also supports remote configuration files served by a web server. To use it, rather than a path, pass a URL. For example:</p>
+<div class="highlight"><pre><span></span><code><span class="go">kube-burner init -c http://web.domain.com:8080/cfg.yml -t ${token} --uuid 67f9ec6d-6a9e-46b6-a3bb-065cde988790`</span>
+</code></pre></div>
+<p>To scrape metrics from multiple endpoints, the  <code>init</code> command can be triggered. For example:</p>
+<div class="highlight"><pre><span></span><code><span class="go">kube-burner init -c cluster-density.yml -e metrics-endpoints.yaml</span>
+</code></pre></div>
+<p>A metrics-endpoints.yaml file with valid keys for the <code>init</code> command would look like the following:</p>
+<div class="highlight"><pre><span></span><code><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">endpoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://localhost:9090</span>
+<span class="w">  </span><span class="nt">token</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;token&gt;</span>
+<span class="w">  </span><span class="nt">profile</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">metrics.yaml</span>
+<span class="w">  </span><span class="nt">alertProfile</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">alert-profile.yaml</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">endpoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://remotehost:9090</span>
+<span class="w">  </span><span class="nt">token</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;token&gt;</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Options <code>profile</code> and <code>alertProfile</code> are optional. If not provided, the options will be taken from the CLI flags first. Otherwise, they are populated with the default values. Invalid keys are ignored.</p>
+</div>
+<h2 id="index">Index<a class="headerlink" href="#index" title="Permanent link">&para;</a></h2>
+<p>This subcommand can be used to collect and index the metrics from a given time range. The time range is given by:</p>
 <ul>
-<li>Find binaries for different CPU architectures and operating systems in the <a href="https://github.com/kube-burner/kube-burner/releases">releases section of the repository</a>.</li>
-<li>Use the container image repository available at <a href="https://quay.io/repository/kube-burner/kube-burner?tab=tags">quay</a>.</li>
-<li>Reference valid examples of configuration files, metrics profiles, and Grafana dashboards in the <a href="https://github.com/kube-burner/kube-burner/tree/master/examples">examples directory</a> of the repository.</li>
+<li><code>start</code>: Epoch start time. Defaults to one hour before the current time.</li>
+<li><code>end</code>: Epoch end time. Defaults to the current time.</li>
 </ul>
+<h2 id="measure">Measure<a class="headerlink" href="#measure" title="Permanent link">&para;</a></h2>
+<p>This subcommand can be used to collect measurements for a given set of resources which were part of a workload ran in past and are still present on the cluster (i.e only supports podLatency as of today).
+We can specify a list of namespaces and selector labels as input.</p>
+<ul>
+<li><code>namespaces</code>: comma-separated list of namespaces provided as a string input. This is optional, by default all namespaces are considered.</li>
+<li><code>selector</code>: comma-separated list of selector labels in the format key1=value1,key2=value2. This is optional, by default no labels will be used for filtering.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This subcommand should only be used to fetch measurements of a workload ran in the past. Also those resources should be active on the cluster. For present cases, please refer to the alternate options in this tool.</p>
+</div>
+<h2 id="check-alerts">Check alerts<a class="headerlink" href="#check-alerts" title="Permanent link">&para;</a></h2>
+<p>This subcommand can be used to evaluate alerts configured in the given alert profile. Similar to <code>index</code>, the time range is given by the <code>start</code> and <code>end</code> flags.</p>
+<h2 id="destroy">Destroy<a class="headerlink" href="#destroy" title="Permanent link">&para;</a></h2>
+<p>This subcommand requires the <code>uuid</code> flag to destroy all namespaces labeled with <code>kube-burner-uuid=&lt;UUID&gt;</code>.</p>
+<h2 id="completion">Completion<a class="headerlink" href="#completion" title="Permanent link">&para;</a></h2>
+<p>Generates bash a completion script that can be imported with:
+<code>. &lt;(kube-burner completion)</code></p>
+<p>Or permanently imported with:
+<code>kube-burner completion &gt; /etc/bash_completion.d/kube-burner</code></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>the <code>bash-completion</code> utils must be installed for the kube-burner completion script to work.</p>
+</div>
 
 
 
@@ -794,10 +964,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.top", "navigation.footer", "toc.integrate", "search.suggest", "search.highlight", "search.share", "content.code.copy"], "search": "assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"limit": 3, "provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.top", "navigation.footer", "toc.integrate", "search.suggest", "search.highlight", "search.share", "content.code.copy"], "search": "../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"limit": 3, "provider": "mike"}}</script>
     
     
-      <script src="assets/javascripts/bundle.d7c377c4.min.js"></script>
+      <script src="../assets/javascripts/bundle.d7c377c4.min.js"></script>
       
     
   </body>

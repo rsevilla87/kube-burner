@@ -9,23 +9,25 @@
       
       
       
+        <link rel="prev" href="../">
       
-        <link rel="next" href="cli/">
+      
+        <link rel="next" href="../indexing/">
       
       
-      <link rel="icon" href="media/logos/kube-burner-logo-mini.png">
+      <link rel="icon" href="../../media/logos/kube-burner-logo-mini.png">
       <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
     
     
       
-        <title>Kube-burner</title>
+        <title>Collecting metrics - Kube-burner</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.50c56a3b.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.50c56a3b.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -44,9 +46,9 @@
       
     
     
-      <link rel="stylesheet" href="css/extra.css">
+      <link rel="stylesheet" href="../../css/extra.css">
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -72,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#what-is-kube-burner" class="md-skip">
+        <a href="#metric-profile" class="md-skip">
           Skip to content
         </a>
       
@@ -92,9 +94,9 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="Kube-burner" class="md-header__button md-logo" aria-label="Kube-burner" data-md-component="logo">
+    <a href="../.." title="Kube-burner" class="md-header__button md-logo" aria-label="Kube-burner" data-md-component="logo">
       
-  <img src="media/logos/kube-burner-logo-mini.png" alt="logo">
+  <img src="../../media/logos/kube-burner-logo-mini.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -111,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              Collecting metrics
             
           </span>
         </div>
@@ -233,9 +235,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="Kube-burner" class="md-nav__button md-logo" aria-label="Kube-burner" data-md-component="logo">
+    <a href="../.." title="Kube-burner" class="md-nav__button md-logo" aria-label="Kube-burner" data-md-component="logo">
       
-  <img src="media/logos/kube-burner-logo-mini.png" alt="logo">
+  <img src="../../media/logos/kube-burner-logo-mini.png" alt="logo">
 
     </a>
     Kube-burner
@@ -259,19 +261,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -280,7 +273,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -292,7 +284,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cli/" class="md-nav__link">
+      <a href="../../cli/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -312,7 +304,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/configuration/" class="md-nav__link">
+      <a href="../../reference/configuration/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -332,7 +324,7 @@
   
   
     <li class="md-nav__item">
-      <a href="measurements/" class="md-nav__link">
+      <a href="../../measurements/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -349,6 +341,8 @@
       
   
   
+    
+  
   
   
     
@@ -372,17 +366,17 @@
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
         
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="observability/" class="md-nav__link ">
+            <a href="../" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -399,7 +393,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             Observability & Alerting
@@ -415,7 +409,7 @@
   
   
     <li class="md-nav__item">
-      <a href="observability/" class="md-nav__link">
+      <a href="../" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -433,10 +427,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="observability/metrics/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Collecting metrics
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -445,6 +459,53 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#instant-queries" class="md-nav__link">
+    <span class="md-ellipsis">
+      Instant queries
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metric-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      Metric format
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-the-elapsed-variable" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using the elapsed variable
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -457,7 +518,7 @@
   
   
     <li class="md-nav__item">
-      <a href="observability/indexing/" class="md-nav__link">
+      <a href="../indexing/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -478,7 +539,7 @@
   
   
     <li class="md-nav__item">
-      <a href="observability/alerting/" class="md-nav__link">
+      <a href="../alerting/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -506,7 +567,7 @@
   
   
     <li class="md-nav__item">
-      <a href="ocp/" class="md-nav__link">
+      <a href="../../ocp/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -550,7 +611,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="contributing/" class="md-nav__link ">
+            <a href="../../contributing/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -626,7 +687,7 @@
   
   
     <li class="md-nav__item">
-      <a href="contributing/pullrequest/" class="md-nav__link">
+      <a href="../../contributing/pullrequest/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -647,7 +708,7 @@
   
   
     <li class="md-nav__item">
-      <a href="contributing/release/" class="md-nav__link">
+      <a href="../../contributing/release/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -676,7 +737,7 @@
   
   
     <li class="md-nav__item">
-      <a href="contributing/tests/" class="md-nav__link">
+      <a href="../../contributing/tests/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -715,25 +776,77 @@
   
 
 
-<p><a href="https://goreportcard.com/report/github.com/kube-burner/kube-burner"><img alt="Go Report Card" src="https://goreportcard.com/badge/github.com/kube-burner/kube-burner" /></a>
-<a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" /></a></p>
-<h1 id="what-is-kube-burner">What is Kube-burner<a class="headerlink" href="#what-is-kube-burner" title="Permanent link">&para;</a></h1>
-<p>Kube-burner is a Kubernetes performance and scale test orchestration toolset. It provides multi-faceted functionality, the most important of which are summarized below.</p>
-<ul>
-<li>Create, delete, and patch Kubernetes resources at scale.</li>
-<li>Prometheus metric collection and indexing.</li>
-<li>Measurements.</li>
-<li>Alerting.</li>
-</ul>
-<p>Kube-burner is a binary application written in Golang that makes extensive usage of the official k8s client library, <a href="https://github.com/kubernetes/client-go">client-go</a>.</p>
-<p><img alt="Demo" src="media/demo.gif" /></p>
-<h1 id="quick-starting-with-kube-burner">Quick starting with kube-burner<a class="headerlink" href="#quick-starting-with-kube-burner" title="Permanent link">&para;</a></h1>
-<p>To start tinkering with kube-burner now:</p>
-<ul>
-<li>Find binaries for different CPU architectures and operating systems in the <a href="https://github.com/kube-burner/kube-burner/releases">releases section of the repository</a>.</li>
-<li>Use the container image repository available at <a href="https://quay.io/repository/kube-burner/kube-burner?tab=tags">quay</a>.</li>
-<li>Reference valid examples of configuration files, metrics profiles, and Grafana dashboards in the <a href="https://github.com/kube-burner/kube-burner/tree/master/examples">examples directory</a> of the repository.</li>
-</ul>
+<h1 id="metric-profile">Metric profile<a class="headerlink" href="#metric-profile" title="Permanent link">&para;</a></h1>
+<p>The metric-collection feature is configured through a file pointed by the <code>metrics-profile</code> flag, which can point to a local path or URL of a YAML-formatted file containing a list of the Prometheus expressions. Kube-burner will perform those queries one by one, once all jobs are finished.</p>
+<p>In a single job benchmark, the queries are executed using the benchmark start and end time as time range. In multiple job benchmarks, these queries are executed in a per job basis, and they take the different start and end times from the executed jobs.</p>
+<p>The metrics profile file has the following structure:</p>
+<div class="highlight"><pre><span></span><code><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">query</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">irate(process_cpu_seconds_total{job=~&quot;.*(crio|etcd|controller-manager|apiserver|scheduler).*&quot;}[2m])</span>
+<span class="w">  </span><span class="nt">metricName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">controlPlaneCPU</span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">query</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sum(irate(node_cpu_seconds_total[2m])) by (mode,instance)</span>
+<span class="w">  </span><span class="nt">metricName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nodeCPU</span>
+</code></pre></div>
+<p>The <code>query</code> field holds the Prometheus expression to evaluate, and <code>metricName</code> controls the value that kube-burner will set on the <code>metricName</code> field of the generated documents. This is useful to identify metrics from a specific query. More information is available in the <a href="#metric-format">metric format section</a>.</p>
+<h2 id="instant-queries">Instant queries<a class="headerlink" href="#instant-queries" title="Permanent link">&para;</a></h2>
+<p>In addition to the default range queries, kube-burner has the ability execute <a href="https://prometheus.io/docs/prometheus/latest/querying/api/#instant-queries">instant queries</a> against the provided Prometheus API. This can be enaled by enabling the field <code>instant</code> to the desired metric.</p>
+<div class="highlight"><pre><span></span><code><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">query</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kube_node_role</span>
+<span class="w">  </span><span class="nt">metricName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nodeRoles</span>
+<span class="w">  </span><span class="nt">instant</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>When using instant queries, at least two documents are generated, one resulting from scraping the last timestamp of the job, which would have the configued <code>metricName</code> field and an another one resulting from scraping the first timestamp of the job, the <code>metricName</code> of document is appended the <code>-start</code> suffix.</p>
+</div>
+<h2 id="metric-format">Metric format<a class="headerlink" href="#metric-format" title="Permanent link">&para;</a></h2>
+<p>The collected metrics have the following shape:</p>
+<div class="highlight"><pre><span></span><code><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2021-06-23T11:50:15+02:00&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;labels&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;instance&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ip-10-0-219-170.eu-west-3.compute.internal&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;mode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;user&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.3300880234732172</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;uuid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;UUID&gt;&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;query&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sum(irate(node_cpu_seconds_total[2m])) by (mode,instance) &gt; 0&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;metricName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;nodeCPU&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;jobConfig&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;truncated_job_configuration&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;foobar&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2021-06-23T11:50:45+02:00&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;labels&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;instance&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ip-10-0-219-170.eu-west-3.compute.internal&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;mode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;user&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.31978102677038506</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;uuid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;UUID&gt;&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;query&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sum(irate(node_cpu_seconds_total[2m])) by (mode,instance) &gt; 0&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;metricName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;nodeCPU&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;jobConfig&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;truncated_job_configuration&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;foobar&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">]</span>
+</code></pre></div>
+<p>Notice that kube-burner enriches the query results by adding some extra fields like <code>uuid</code>, <code>query</code>, <code>metricName</code> and <code>jobName</code>.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>These extra fields are especially useful at the time of identifying and representing the collected metrics.</p>
+</div>
+<h2 id="using-the-elapsed-variable">Using the elapsed variable<a class="headerlink" href="#using-the-elapsed-variable" title="Permanent link">&para;</a></h2>
+<p>There is a special go-template variable that can be used within the Prometheus expressions of a metric profile; the variable <code>elapsed</code> is automatically populated with the job duration, in seconds. This variable is especially useful in PromQL expressions using <a href="https://prometheus.io/docs/prometheus/latest/querying/functions/#aggregation_over_time">aggregations over time functions</a>.</p>
+<p>For example, the following expression gets the top 3 datapoints with the average CPU usage kubelets processes in the cluster.</p>
+<div class="highlight"><pre><span></span><code><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">query</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">irate(process_cpu_seconds_total{service=&quot;kubelet&quot;,job=&quot;kubelet&quot;}[2m]) * 100 and on (node) topk(3,avg_over_time(irate(process_cpu_seconds_total{service=&quot;kubelet&quot;,job=&quot;kubelet&quot;}[2m])[{{ .elapsed }}:]))</span>
+<span class="w">  </span><span class="nt">metricName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">top3KubeletCPU</span>
+<span class="w">  </span><span class="nt">instant</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Note that in the [time-range:] notation, the colon specifies to get the values for the given duration.</p>
+</div>
+<p>Examples of metrics profiles can be found in the <a href="https://github.com/kube-burner/kube-burner/tree/master/examples/">examples directory</a>. There are also Elasticsearch based Grafana dashboards available in the same examples directory.</p>
 
 
 
@@ -794,10 +907,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.top", "navigation.footer", "toc.integrate", "search.suggest", "search.highlight", "search.share", "content.code.copy"], "search": "assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"limit": 3, "provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.top", "navigation.footer", "toc.integrate", "search.suggest", "search.highlight", "search.share", "content.code.copy"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"limit": 3, "provider": "mike"}}</script>
     
     
-      <script src="assets/javascripts/bundle.d7c377c4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
       
     
   </body>
