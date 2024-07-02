@@ -96,6 +96,7 @@ func setupCreateJob(jobConfig config.Job) Executor {
 
 // RunCreateJob executes a creation job
 func (ex *Executor) RunCreateJob(iterationStart, iterationEnd int, waitListNamespaces *[]string) {
+	start := time.Now()
 	waitRateLimiter := rate.NewLimiter(rate.Limit(restConfig.QPS), restConfig.Burst)
 	nsAnnotations := make(map[string]string)
 	nsLabels := map[string]string{
@@ -117,6 +118,7 @@ func (ex *Executor) RunCreateJob(iterationStart, iterationEnd int, waitListNames
 		if err = util.CreateNamespace(ClientSet, ns, nsLabels, nsAnnotations); err != nil {
 			log.Fatal(err.Error())
 		}
+		ex.requestsSent++
 		*waitListNamespaces = append(*waitListNamespaces, ns)
 	}
 	// We have to sum 1 since the iterations start from 1
@@ -137,6 +139,7 @@ func (ex *Executor) RunCreateJob(iterationStart, iterationEnd int, waitListNames
 					log.Error(err.Error())
 					continue
 				}
+				ex.requestsSent++
 				namespacesCreated[ns] = true
 				*waitListNamespaces = append(*waitListNamespaces, ns)
 			}
@@ -174,6 +177,7 @@ func (ex *Executor) RunCreateJob(iterationStart, iterationEnd int, waitListNames
 	}
 	// Wait for all replicas to be created
 	wg.Wait()
+	ex.actionTime += time.Since(start).Seconds()
 	if ex.WaitWhenFinished {
 		log.Infof("Waiting up to %s for actions to be completed", ex.MaxWaitTimeout)
 		// This semaphore is used to limit the maximum number of concurrent goroutines
@@ -212,14 +216,12 @@ func (ex *Executor) generateNamespace(iteration int) string {
 
 func (ex *Executor) replicaHandler(labels map[string]string, obj object, ns string, iteration int, replicaWg *sync.WaitGroup) {
 	var wg sync.WaitGroup
-
 	for r := 1; r <= obj.Replicas; r++ {
 		// make a copy of the labels map for each goroutine to prevent panic from concurrent read and write
 		copiedLabels := make(map[string]string)
 		for k, v := range labels {
 			copiedLabels[k] = v
 		}
-
 		wg.Add(1)
 		go func(r int) {
 			defer wg.Done()
@@ -257,7 +259,7 @@ func (ex *Executor) replicaHandler(labels map[string]string, obj object, ns stri
 				if !obj.Namespaced {
 					n = ""
 				}
-				createRequest(obj.gvr, n, newObject, ex.MaxWaitTimeout)
+				ex.createRequest(obj.gvr, n, newObject, ex.MaxWaitTimeout)
 				replicaWg.Done()
 			}(ns)
 		}(r)
@@ -265,7 +267,7 @@ func (ex *Executor) replicaHandler(labels map[string]string, obj object, ns stri
 	wg.Wait()
 }
 
-func createRequest(gvr schema.GroupVersionResource, ns string, obj *unstructured.Unstructured, timeout time.Duration) {
+func (ex *Executor) createRequest(gvr schema.GroupVersionResource, ns string, obj *unstructured.Unstructured, timeout time.Duration) {
 	var uns *unstructured.Unstructured
 	var err error
 	util.RetryWithExponentialBackOff(func() (bool, error) {
@@ -278,6 +280,11 @@ func createRequest(gvr schema.GroupVersionResource, ns string, obj *unstructured
 		} else {
 			uns, err = DynamicClient.Resource(gvr).Create(context.TODO(), obj, metav1.CreateOptions{})
 		}
+		func() {
+			ex.mu.Lock()
+			ex.requestsSent++
+			ex.mu.Unlock()
+		}()
 		if err != nil {
 			if kerrors.IsUnauthorized(err) {
 				log.Fatalf("Authorization error creating %s/%s: %s", obj.GetKind(), obj.GetName(), err)

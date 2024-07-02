@@ -35,6 +35,8 @@ type JobSummary struct {
 	Version             string                 `json:"version"`
 	Passed              bool                   `json:"passed"`
 	ExecutionErrors     string                 `json:"executionErrors,omitempty"`
+	ObservedQPS         float64                `json:"observedQPS"`
+	RequestsSent        int                    `json:"requestsSent"`
 }
 
 const jobSummaryMetric = "jobSummary"

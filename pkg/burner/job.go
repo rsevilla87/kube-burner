@@ -56,10 +56,13 @@ type object struct {
 type Executor struct {
 	objects []object
 	config.Job
-	uuid       string
-	runid      string
-	limiter    *rate.Limiter
-	nsRequired bool
+	uuid         string
+	runid        string
+	limiter      *rate.Limiter
+	nsRequired   bool
+	mu           sync.Mutex
+	requestsSent int
+	actionTime   float64
 }
 
 const (
@@ -190,6 +193,8 @@ func Run(configSpec config.Spec, kubeClientProvider *config.KubeClientProvider, 
 				time.Sleep(job.JobPause)
 			}
 			currentJob.End = time.Now().UTC()
+			currentJob.ActionTime = job.actionTime
+			currentJob.RequestsSent = float64(job.requestsSent)
 			executedJobs = append(executedJobs, currentJob)
 			if !globalConfig.WaitWhenFinished {
 				elapsedTime := currentJob.End.Sub(currentJob.Start).Round(time.Second)
@@ -265,6 +270,8 @@ func Run(configSpec config.Spec, kubeClientProvider *config.KubeClientProvider, 
 					ExecutionErrors:     executionErrors,
 					Version:             fmt.Sprintf("%v@%v", version.Version, version.GitCommit),
 					MetricName:          jobSummaryMetric,
+					RequestsSent:        int(job.RequestsSent),
+					ObservedQPS:         job.RequestsSent / job.RequestsSent,
 				})
 			}
 		}

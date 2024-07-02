@@ -44,11 +44,13 @@ type Prometheus struct {
 }
 
 type Job struct {
-	Start      time.Time
-	End        time.Time
-	ChurnStart time.Time
-	ChurnEnd   time.Time
-	JobConfig  config.Job
+	Start        time.Time
+	End          time.Time
+	ChurnStart   time.Time
+	ChurnEnd     time.Time
+	ActionTime   float64
+	RequestsSent float64
+	JobConfig    config.Job
 }
 
 type metricProfile struct {
