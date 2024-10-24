@@ -108,6 +108,7 @@ func Run(configSpec config.Spec, kubeClientProvider *config.KubeClientProvider, 
 	executorMap := make(map[string]Executor)
 	returnMap := make(map[string]returnPair)
 	log.Infof("🔥 Starting kube-burner (%s@%s) with UUID %s", version.Version, version.GitCommit, uuid)
+	//nolint:govet
 	ctx, _ := context.WithTimeout(context.Background(), timeout)
 	go func() {
 		var innerRC int
