@@ -116,6 +116,11 @@ func Run(configSpec config.Spec, kubeClientProvider *config.KubeClientProvider, 
 					log.Infof("Churn percent: %v", job.ChurnPercent)
 					log.Infof("Churn delay: %v", job.ChurnDelay)
 					log.Infof("Churn deletion strategy: %v", job.ChurnDeletionStrategy)
+					churnStart := time.Now().UTC()
+					executedJobs[len(executedJobs)-1].ChurnStart = &churnStart
+					job.RunCreateJobWithChurn(ctx)
+					churnEnd := time.Now().UTC()
+					executedJobs[len(executedJobs)-1].ChurnEnd = &churnEnd
 				}
 				job.RunCreateJob(ctx, 0, job.JobIterations, &waitListNamespaces)
 				if ctx.Err() != nil {
@@ -239,10 +244,11 @@ func Run(configSpec config.Spec, kubeClientProvider *config.KubeClientProvider, 
 		executedJobs[len(executedJobs)-1].End = time.Now().UTC()
 		errs = append(errs, err)
 		rc = rcTimeout
+		// Fix context leak by calling the cancel function
 		if globalConfig.GC {
 			gcCtx, cancelGC = context.WithTimeout(context.Background(), globalConfig.GCTimeout)
 			defer cancelGC()
-			for _, job := range jobList[:len(executedJobs)-1] {
+			for _, job := range jobList {
 				gcWg.Add(1)
 				go garbageCollectJob(gcCtx, job, fmt.Sprintf("kube-burner-job=%s", job.Name), &gcWg)
 			}
