@@ -10,6 +10,69 @@ KUBE_BURNER=${KUBE_BURNER:-kube-burner}
 KIND_YAML=${KIND_YAML:-kind.yml}
 KUBEVIRT_CR=${KUBEVIRT_CR:-objectTemplates/kubevirt-cr.yaml}
 
+setup_file() {
+  cd k8s || exit 1
+  export BATS_TEST_TIMEOUT=1800
+  export JOB_ITERATIONS=4
+  export QPS=3
+  export BURST=3
+  export TEST_KUBECONFIG; TEST_KUBECONFIG=$(mktemp -d)/kubeconfig
+  export TEST_KUBECONTEXT=test-context
+  export ES_SERVER=${PERFSCALE_PROD_ES_SERVER:-"http://localhost:9200"}
+  export ES_INDEX="kube-burner"
+  export DEPLOY_GRAFANA=${DEPLOY_GRAFANA:-false}
+  if [[ "${USE_EXISTING_CLUSTER,,}" != "yes" ]]; then
+    setup-kind
+  fi
+  create_test_kubeconfig
+  setup-prometheus
+  if [[ -z "$PERFSCALE_PROD_ES_SERVER" ]]; then
+    $OCI_BIN rm -f opensearch
+    $OCI_BIN network rm -f monitoring
+    setup-shared-network
+    setup-opensearch
+    if [ "$DEPLOY_GRAFANA" = "true" ]; then
+      $OCI_BIN rm -f grafana
+      setup-grafana
+      configure-grafana-datasource
+      deploy-grafana-dashboards
+    fi
+  fi
+}
+
+setup() {
+  export UUID; UUID=$(uuidgen)
+  export METRICS_FOLDER="metrics-${UUID}"
+  export ES_INDEXING=""
+  export CHURN_CYCLES=0
+  export CHURN_MODE=namespaces
+  export PRELOAD_IMAGES=false
+  export GC=true
+  export JOBGC=false
+  export LOCAL_INDEXING=""
+  export ALERTING=""
+  export TIMESERIES_INDEXER=""
+  export CRD=""
+  export SVC_LATENCY=""
+}
+
+teardown() {
+  kubectl delete ns -l kube-burner-uuid=${UUID} --ignore-not-found
+}
+
+teardown_file() {
+  if [[ "${USE_EXISTING_CLUSTER,,}" != "yes" ]]; then
+    destroy-kind
+  fi
+  $OCI_BIN rm -f prometheus
+  if [[ -z "$PERFSCALE_PROD_ES_SERVER" ]]; then
+    if [ "$DEPLOY_GRAFANA" = "false" ]; then
+      $OCI_BIN rm -f opensearch
+      $OCI_BIN network rm -f monitoring
+    fi
+  fi
+}
+
 setup-kind() {
   KIND_FOLDER=${KIND_FOLDER:-$(mktemp -d)}
   echo "Downloading kind"
@@ -141,50 +204,28 @@ deploy-grafana-dashboards() {
   done
 }
 
-check_ns() {
-  echo "Checking the number of namespaces labeled with \"${1}\" is \"${2}\""
-  if [[ $(kubectl get ns -l "${1}" -o json | jq '.items | length') != "${2}" ]]; then
-    echo "Number of namespaces labeled with ${1} less than expected"
-    return 1
+verify_object_count(){
+  local resource=$1
+  local count=$2
+  local namespace=$3
+  local selector=$4
+  local fieldSelector=$5
+  local CMD="kubectl get $1 -o json"
+  if [[ -n ${namespace} ]]; then
+    CMD+=" -n ${namespace}"
+  else
+    CMD+=" -A"
   fi
-}
-
-check_destroyed_ns() {
-  echo "Checking namespace \"${1}\" has been destroyed"
-  if [[ $(kubectl get ns -l "${1}" -o json | jq '.items | length') != 0 ]]; then
-    echo "Namespaces labeled with \"${1}\" not destroyed"
-    return 1
+  if [[ -n ${selector} ]]; then
+    CMD+=" -l ${selector}"
   fi
-}
-
-check_destroyed_pods() {
-  echo "Checking pods have been destroyed in namespace ${1}"
-  if [[ $(kubectl get pod -n "${1}" -l "${2}" -o json | jq '.items | length') != 0 ]]; then
-    echo "Pods in namespace ${1} not destroyed"
-    return 1
+  if [[ -n ${fieldSelector} ]]; then
+    CMD+=" --field-selector ${fieldSelector}"
   fi
-}
-
-check_running_pods() {
-  running_pods=$(kubectl get pod -A -l "${1}" --field-selector=status.phase==Running -o json | jq '.items | length')
-  if [[ "${running_pods}" != "${2}" ]]; then
-    echo "Running pods in cluster labeled with ${1} different from expected: Expected=${2}, observed=${running_pods}"
-    return 1
-  fi
-}
-
-check_running_pods_in_ns() {
-  running_pods=$(kubectl get pod -n "${1}" -l kube-burner.io/job=namespaced --field-selector=status.phase==Running -o json | jq '.items | length')
-  if [[ "${running_pods}" != "${2}" ]]; then
-    echo "Running pods in namespace $1 different from expected. Expected=${2}, observed=${running_pods}"
-    return 1
-  fi
-}
-
-check_running_custom_resources_in_ns() {
-  running_resources=$(kubectl get "${1}" -n "${2}" -l kube-burner.io/job=test-resources -o json | jq '.items | length')
-  if [[ "${running_resources}" != "${3}" ]]; then
-    echo "Running ${1}s in namespace $2 different from expected. Expected=${3}, observed=${running_resources}"
+  echo "${CMD}"
+  counted=$(${CMD} | jq '.items | length')
+  if [[ ${counted} != "${count}" ]]; then
+    echo "Expected ${count} ${resource}(s), seen ${counted}"
     return 1
   fi
 }
@@ -242,7 +283,7 @@ check_custom_status_path() {
 }
 
 check_metric_value() {
-  sleep 3 # There's some delay on the documents to show up in OpenSearch
+  sleep 3 # There's some delay before the documents show up in OpenSearch
   for metric in "${@}"; do
     endpoint="${ES_SERVER}/${ES_INDEX}/_search?q=uuid.keyword:${UUID}+AND+metricName.keyword:${metric}"
     RESULT=$(curl -sS ${endpoint} | jq '.hits.total.value // error')
@@ -272,20 +313,6 @@ check_file_exists() {
       fi
   done
   return 0
-}
-
-check_deployment_count() {
-  local NAMESPACE=${1}
-  local LABEL_KEY=${2}
-  local LABEL_VALUE=${3}
-  local EXPECTED_COUNT=${4}
-
-  ACTUAL_COUNT=$(kubectl get deployment -n ${NAMESPACE} -l ${LABEL_KEY}=${LABEL_VALUE} -o json | jq '.items | length')
-  if [[ "${ACTUAL_COUNT}" != "${EXPECTED_COUNT}" ]]; then
-    echo "Expected ${EXPECTED_COUNT} replicas to be patched with ${LABEL_KEY}=${LABEL_VALUE_END} but found ${ACTUAL_COUNT}"
-    return 1
-  fi
-  echo "Found the expected ${EXPECTED_COUNT} deployments"
 }
 
 get_default_storage_class() {

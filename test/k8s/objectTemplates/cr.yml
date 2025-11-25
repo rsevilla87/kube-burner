@@ -2,7 +2,7 @@
 apiVersion: testcrd.example.com/v1
 kind: TestCR
 metadata:
-  name: test{{.Replica}}
+  name: testcr-{{.Replica}}
 spec:
-  workload: {{randAlpha 5}}
-  iterations: {{.Iteration}}
+   workload: {{randAlpha 5}}
+   iterations: {{.Iteration}}

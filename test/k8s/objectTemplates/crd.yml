@@ -26,4 +26,4 @@ spec:
     singular: testcr
     kind: TestCR
     shortNames:
-    - tcr
+    - testcr
