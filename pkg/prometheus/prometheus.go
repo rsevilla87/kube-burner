@@ -42,7 +42,7 @@ func NewPrometheusClient(configSpec config.Spec, url string, auth Auth, step tim
 		indexer:    indexer,
 		metadata:   metadata,
 	}
-	log.Infof("👽 Initializing prometh   eus  client with URL: %s", url)
+	log.Infof("👽 Initializing pro meth   eus  client with URL: %s", url)
 	p.Client, err = prometheus.NewClient(url, auth.Token, auth.Username, auth.Password, auth.SkipTLSVerify)
 	return &p, err
 }
