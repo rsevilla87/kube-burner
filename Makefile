@@ -123,4 +123,8 @@ manifest-build:
 test: lint test-k8s
 
 test-k8s:
+	git remote -v
+	git fetch origin main
+	git diff origin/main --name-only
+	./hack/get_changed_labels.py hack/bats_test_mappings.yml
 	cd test && KUBE_BURNER=$(TEST_BINARY) bats $(if $(TEST_FILTER),--filter "$(TEST_FILTER)",) -F pretty -T --print-output-on-failure test-k8s.bats -j $(JOBS)
