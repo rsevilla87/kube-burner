@@ -96,6 +96,7 @@ func Run(configSpec config.Spec, kubeClientProvider *config.KubeClientProvider, 
 	metricsScraper.MetricsMetadata = clusterInfo.ApplyMetadata(metricsScraper.MetricsMetadata)
 	go func() {
 		var innerRC int
+<<<<<<< HEAD
 		measurementsFactory := measurements.NewMeasurementsFactory(configSpec, metricsScraper.MetricsMetadata, additionalMeasurementFactoryMap)
 		jobExecutors = newExecutorList(configSpec, kubeClientProvider, embedCfg)
 		if err := handlePreloadImages(ctx, jobExecutors, kubeClientProvider); err != nil {
@@ -112,6 +113,73 @@ func Run(configSpec config.Spec, kubeClientProvider *config.KubeClientProvider, 
 				jobExecutor.gc(ctx, nil)
 				// After GC
 				jobExecutor.executeHooksForJobStage(config.HookAfterGC, &errs, &innerRC)
+=======
+		measurements.NewMeasurementFactory(configSpec, indexer, metadata)
+		jobList = newExecutorList(configSpec, uuid, timeout)
+		// Iterate job list
+		for jobPosition, job := range jobList {
+			var waitListNamespaces []string
+			if job.QPS == 0 || job.Burst == 0 {
+				log.Infof("QPS or Burst rates not set, using default client-go values: %v %v", rest.DefaultQPS, rest.DefaultBurst)
+			} else {
+				log.Infof("QPS: %v", job.QPS)
+				log.Infof("Burst: %v", job.Burst)
+			}
+			ClientSet, restConfig, err = config.GetClientSet(job.QPS, job.Burst)
+			discoveryClient = discovery.NewDiscoveryClientForConfigOrDie(restConfig)
+			if err != nil {
+				log.Fatalf("Error creating clientSet: %s", err)
+			}
+			DynamicClient = dynamic.NewForConfigOrDie(restConfig)
+			if job.PreLoadImages && job.JobType == config.CreationJob {
+				if err = preLoadImages(job); err != nil {
+					log.Fatal(err.Error())
+				}
+			}
+			jobList[jobPosition].Start = time.Now().UTC()
+			measurements.SetJobConfig(&job.Job)
+			log.Infof("Triggering job: %s", job.Name)
+			measurements.Start()
+			switch job.JobType {
+			case config.CreationJob:
+				if job.Cleanup {
+					ctx, cancel := context.WithTimeout(context.Background(), globalConfig.GCTimeout)
+					defer cancel()
+					CleanupNamespaces(ctx, metav1.ListOptions{LabelSelector: fmt.Sprintf("kube-burner-job=%s", job.Name)}, true)
+					CleanupNonNamespacedResourcesUsingGVR(ctx, jobList, true)
+				}
+				if job.Churn {
+					log.Info("Churning enabled")
+					log.Infof("Churn duration: %v", job.ChurnDuration)
+					log.Infof("Churn percent: %v", job.ChurnPercent)
+					log.Infof("Churn delay: %v", job.ChurnDelay)
+				}
+				job.RunCreateJob(0, job.JobIterations, &waitListNamespaces)
+				// If object verification is enabled
+				if job.VerifyObjects && !job.Verify() {
+					err := errors.New("object verification failed")
+					// If errorOnVerify is enabled. Set RC to 1 and append error
+					if job.ErrorOnVerify {
+						innerRC = 1
+						errs = append(errs, err)
+					}
+					log.Error(err.Error())
+				}
+				if job.Churn {
+					job.RunCreateJobWithChurn()
+				}
+				globalWaitMap[strconv.Itoa(jobPosition)+job.Name] = waitListNamespaces
+				executorMap[strconv.Itoa(jobPosition)+job.Name] = job
+			case config.DeletionJob:
+				job.RunDeleteJob()
+			case config.PatchJob:
+				job.RunPatchJob()
+			}
+			if job.JobPause > 0 {
+				log.Infof("Pausing for %v before finishing job", job.JobPause)
+				time.Sleep(job.JobPause)
+			}
+>>>>>>> 52b8cdc4 (PreLoad image sonly in creation jobs)
 
 			}
 		}
