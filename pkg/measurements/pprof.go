@@ -73,6 +73,7 @@ func (plmf pprofLatencyMeasurementFactory) NewMeasurement(jobConfig *config.Job,
 
 func (p *pprof) Start(measurementWg *sync.WaitGroup) error {
 	defer measurementWg.Done()
+	p.stopChannel = make(chan bool)
 	if p.needsDaemonSet() {
 		if err := p.deployDaemonSet(); err != nil {
 			return fmt.Errorf("error deploying DaemonSet: %v", err)
@@ -196,11 +197,9 @@ func (p *pprof) getPProf(suffix string) {
 	wg := sync.WaitGroup{}
 	for pos, target := range p.Config.PProfTargets {
 		dstDirectory := path.Join(p.Config.PProfDirectory, p.JobConfig.Name, target.Name)
-		if _, err := os.Stat(dstDirectory); os.IsNotExist(err) {
-			if os.MkdirAll(dstDirectory, 0744); err != nil {
-				log.Errorf("Error creating pprof directory %s: %v", dstDirectory, err)
-				continue
-			}
+		if err := os.MkdirAll(dstDirectory, 0744); err != nil {
+			log.Errorf("Error creating pprof directory %s: %v", dstDirectory, err)
+			continue
 		}
 		log.Infof("Collecting %s pprof", target.Name)
 		pods, err := p.getPods(target)
@@ -210,7 +209,7 @@ func (p *pprof) getPProf(suffix string) {
 		}
 		for _, pod := range pods {
 			wg.Add(1)
-			go func(target types.PProftarget, pod corev1.Pod) {
+			go func(target types.PProftarget, pod corev1.Pod, dstDirectory string) {
 				defer wg.Done()
 				pprofFile := fmt.Sprintf("%s-%s.pprof", pod.Name, suffix)
 				if target.LabelSelector == nil {
@@ -250,7 +249,7 @@ func (p *pprof) getPProf(suffix string) {
 				} else {
 					log.Debugf("Successfully collected pprof data: %s", pprofFile)
 				}
-			}(p.Config.PProfTargets[pos], pod)
+			}(p.Config.PProfTargets[pos], pod, dstDirectory)
 		}
 	}
 	wg.Wait()
