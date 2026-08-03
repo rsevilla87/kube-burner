@@ -17,6 +17,7 @@ package burner
 import (
 	"context"
 	"sync"
+	"sync/atomic"
 	"time"
 
 	"maps"
@@ -41,6 +42,14 @@ import (
 type ItemHandler func(ctx context.Context, ex *JobExecutor, obj *object, originalItem unstructured.Unstructured, iteration int, objectTimeUTC int64, wg *sync.WaitGroup)
 type ObjectFinalizer func(ctx context.Context, ex *JobExecutor, obj *object)
 
+// midPointTracker holds MidPoint stage state. Kept behind a pointer so JobExecutor
+// remains safe to copy (atomic.Int64 and sync.Once must not be copied).
+type midPointTracker struct {
+	totalReplicas   int
+	createdReplicas atomic.Int64
+	once            sync.Once
+}
+
 type JobExecutor struct {
 	config.Job
 	objects           []*object
@@ -63,8 +72,7 @@ type JobExecutor struct {
 	nsChurning        bool
 	hookManager       *HookManager
 	stageNotifier     *measurements.Measurements
-	totalReplicas     int
-	createdReplicas   int
+	midPoint          *midPointTracker
 }
 
 func newExecutor(configSpec config.Spec, kubeClientProvider *config.KubeClientProvider, job config.Job, embedCfg *fileutils.EmbedConfiguration) JobExecutor {
