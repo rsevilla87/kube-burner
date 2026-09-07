@@ -443,6 +443,10 @@ func HookBeforeWorkload() error {
 		AfterGC:            true,
 		OnEachIteration:    true,
 	}
+	globalValidWhen := map[JobStage]bool{
+		BeforeAllJobs: true,
+		AfterAllJobs:  true,
+	}
 
 	for _, job := range configSpec.Jobs {
 		for i, hook := range job.Hooks {
@@ -454,7 +458,14 @@ func HookBeforeWorkload() error {
 			}
 		}
 	}
-
+	for _, hook := range configSpec.GlobalConfig.Hooks {
+		if !globalValidWhen[hook.When] {
+			return fmt.Errorf("unsupported when value in global hook %s: %s, (supported: %v)", hook.When, maps.Keys(globalValidWhen))
+		}
+		if len(hook.Cmd) == 0 {
+			return fmt.Errorf("global hook %s has empty command", hook.When)
+		}
+	}
 	return nil
 }
 
