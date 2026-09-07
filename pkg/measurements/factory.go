@@ -37,6 +37,7 @@ type MeasurementsFactory struct {
 
 type Measurements struct {
 	MeasurementsMap map[string]Measurement
+	m               sync.RWMutex // map[string]error
 }
 
 type MeasurementFactory interface {
@@ -159,7 +160,9 @@ func (ms *Measurements) Start() {
 			defer startResultWg.Done()
 			if err := measurement.Start(&measurementWg); err != nil {
 				log.Errorf("Failed to start measurement [%s]: %v", name, err)
+				ms.m.Lock()
 				failedMeasurements = append(failedMeasurements, name)
+				ms.m.Unlock()
 			}
 		}(name, measurement)
 	}
