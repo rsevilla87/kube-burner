@@ -37,7 +37,6 @@ type MeasurementsFactory struct {
 
 type Measurements struct {
 	MeasurementsMap map[string]Measurement
-	failedStarts    sync.Map // map[string]error
 }
 
 type MeasurementFactory interface {
@@ -153,14 +152,13 @@ func (ms *Measurements) Start() {
 	var measurementWg sync.WaitGroup
 	var startResultWg sync.WaitGroup
 	for name, measurement := range ms.MeasurementsMap {
-		ms.failedStarts.Delete(name)
 		measurementWg.Add(1)
 		startResultWg.Add(1)
 		go func(name string, measurement Measurement) {
 			defer startResultWg.Done()
 			if err := measurement.Start(&measurementWg); err != nil {
 				log.Errorf("Failed to start measurement [%s]: %v", name, err)
-				ms.failedStarts.Store(name, err)
+				delete(ms.MeasurementsMap, name)
 			}
 		}(name, measurement)
 	}
@@ -196,10 +194,6 @@ func (ms *Measurements) Collect() {
 func (ms *Measurements) Stop() error {
 	errs := []error{}
 	for name, measurement := range ms.MeasurementsMap {
-		if startErr, failed := ms.failedStarts.Load(name); failed {
-			log.Warnf("Skipping measurement [%s] because it failed to start: %v", name, startErr)
-			continue
-		}
 		log.Infof("Stopping measurement: %s", name)
 		errs = append(errs, measurement.Stop())
 	}

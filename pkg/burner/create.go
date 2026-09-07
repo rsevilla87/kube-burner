@@ -280,14 +280,14 @@ func (ex *JobExecutor) setupCreateJob() {
 	log.Debugf("Preparing create job: %s", ex.Name)
 	ex.midPoint = &midPointTracker{}
 	for _, o := range ex.Objects {
+		if o.Replicas < 1 {
+			log.Warnf("Object template %s has replicas %d < 1, skipping", o.ObjectTemplate, o.Replicas)
+			continue
+		}
 		if o.RunOnce {
 			ex.midPoint.totalReplicas += o.Replicas
 		} else {
 			ex.midPoint.totalReplicas += o.Replicas * ex.JobIterations
-		}
-		if o.Replicas < 1 {
-			log.Warnf("Object template %s has replicas %d < 1, skipping", o.ObjectTemplate, o.Replicas)
-			continue
 		}
 		log.Debugf("Rendering template: %s", o.ObjectTemplate)
 		f, err = fileutils.GetWorkloadReader(o.ObjectTemplate, ex.embedCfg)

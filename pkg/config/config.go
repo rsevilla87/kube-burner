@@ -460,7 +460,7 @@ func HookBeforeWorkload() error {
 	}
 	for _, hook := range configSpec.GlobalConfig.Hooks {
 		if !globalValidWhen[hook.When] {
-			return fmt.Errorf("unsupported when value in global hook %s: %s, (supported: %v)", hook.When, maps.Keys(globalValidWhen))
+			return fmt.Errorf("unsupported when value in global hook: %v, (supported: %v)", hook.When, maps.Keys(globalValidWhen))
 		}
 		if len(hook.Cmd) == 0 {
 			return fmt.Errorf("global hook %s has empty command", hook.When)
