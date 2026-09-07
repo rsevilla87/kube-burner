@@ -714,7 +714,7 @@ func (ex *JobExecutor) notifyMidPoint() {
 // notifyMidpoint counts a successful create from the initial create phase and
 // fires MidPoint exactly once when createdReplicas reaches totalReplicas/2.
 func (ex *JobExecutor) notifyMidpoint() {
-	if ex.midPoint == nil || config.IsChurnEnabled(ex.Job) || ex.stageNotifier == nil || ex.midPoint.totalReplicas <= 0 {
+	if ex.midPoint == nil || ex.stageNotifier == nil || ex.midPoint.totalReplicas <= 0 {
 		return
 	}
 	created := ex.midPoint.createdReplicas.Add(1)

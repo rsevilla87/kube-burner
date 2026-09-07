@@ -296,6 +296,9 @@ func (p *pprof) Collect(measurementWg *sync.WaitGroup) {
 }
 
 func (p *pprof) Stop() error {
+	if p.stopChannel == nil {
+		return nil
+	}
 	p.stopChannel <- true
 	p.getPProf("end")
 	if p.needsDaemonSet() {

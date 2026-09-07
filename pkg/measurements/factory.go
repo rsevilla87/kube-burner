@@ -151,6 +151,7 @@ func (msf *MeasurementsFactory) NewMeasurements(jobConfig *config.Job, kubeClien
 func (ms *Measurements) Start() {
 	var measurementWg sync.WaitGroup
 	var startResultWg sync.WaitGroup
+	var failedMeasurements []string
 	for name, measurement := range ms.MeasurementsMap {
 		measurementWg.Add(1)
 		startResultWg.Add(1)
@@ -158,7 +159,7 @@ func (ms *Measurements) Start() {
 			defer startResultWg.Done()
 			if err := measurement.Start(&measurementWg); err != nil {
 				log.Errorf("Failed to start measurement [%s]: %v", name, err)
-				delete(ms.MeasurementsMap, name)
+				failedMeasurements = append(failedMeasurements, name)
 			}
 		}(name, measurement)
 	}
@@ -166,6 +167,10 @@ func (ms *Measurements) Start() {
 	// implementations, then wait for wrappers to record returned errors.
 	measurementWg.Wait()
 	startResultWg.Wait()
+	// Remove failed measurements from MeasurementsMap
+	for _, name := range failedMeasurements {
+		delete(ms.MeasurementsMap, name)
+	}
 }
 
 // NotifyJobStage notifies stage-aware measurements; blocks until they finish handling the stage.
