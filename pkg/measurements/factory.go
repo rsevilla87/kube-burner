@@ -37,7 +37,7 @@ type MeasurementsFactory struct {
 
 type Measurements struct {
 	MeasurementsMap map[string]Measurement
-	m               sync.RWMutex // map[string]error
+	m               sync.Mutex // guards failedMeasurements slice in Start()
 }
 
 type MeasurementFactory interface {
